@@ -9,9 +9,9 @@ let UserSchema = new Schema({
     ContactNumber : {type: String, required: true, max: 100},
     Organization : {type: String, required: true, max: 100},
     Role : {type: String, required: true, max: 100},
-    Active :{type: String, required: true, max: 100}, 
+    Active :{type: String, required: true, max: 100}
 });
 
-var User = mongoose.model('User', UserSchema);
+
 // Export the model
-module.exports = User;
+module.exports = mongoose.model('users', UserSchema);
