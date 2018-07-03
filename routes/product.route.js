@@ -12,4 +12,8 @@ router.get('/fetchevents', event_controller.eventdetails);
 router.get('/fetcheventdetails', eventdetail_controller.eventdetail);
 router.get('/fetcheventinformation', eventinfo_controller.eventinform);
 router.post('/createuser', user_controller.user_create);
+router.post('/createevent', event_controller.event_create);
+router.put('/:id/updateevent', event_controller.event_update);
+router.post('/login',user_controller.login);
+router.get('/profile',user_controller.profile);
 module.exports = router;
