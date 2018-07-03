@@ -1,4 +1,4 @@
-const UserdetailsInfo = require('../models/product.model');
+const UserdetailsInfo = require('../models/user.model');
 
 exports.userdetails = function (req, res) {
     UserdetailsInfo.find({},function (err, userInfo) {    
