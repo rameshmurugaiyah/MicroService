@@ -16,4 +16,5 @@ router.post('/createevent', event_controller.event_create);
 router.put('/:id/updateevent', event_controller.event_update);
 router.post('/login',user_controller.login);
 router.get('/profile',user_controller.profile);
+router.post('/fileupload',event_controller.file_upload);
 module.exports = router;

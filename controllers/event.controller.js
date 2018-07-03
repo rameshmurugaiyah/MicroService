@@ -1,6 +1,5 @@
 const EventsInfo = require('../models/event.model');
-
-
+var multer = require('multer');
 
 exports.eventdetails = function (req, res) {
     EventsInfo.find({},function (err, eventinfo) {   
@@ -42,4 +41,16 @@ exports.event_update = function (req, res) {
         if (err) return next(err);
         res.send('Event udpated.');
     });
+};
+
+exports.file_upload = (req,res)=>{
+    var storage = multer.diskStorage({
+        destination: (req, file, cb) => {
+          cb(null, 'public/images/uploads')
+        },
+        filename: (req, file, cb) => {
+          cb(null, file.fieldname + '-' + Date.now())
+        }
+    });
+    var upload = multer({storage: storage});
 };

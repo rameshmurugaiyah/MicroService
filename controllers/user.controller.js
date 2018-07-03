@@ -1,6 +1,7 @@
 const UserdetailsInfo = require('../models/user.model');
 var bodyParser = require('body-parser');
 const bcrypt=require('bcrypt-nodejs');
+const uuid = require('uuid');
 
 exports.userdetails = function (req, res) {
     UserdetailsInfo.find({},function (err, userInfo) {   
@@ -10,27 +11,35 @@ exports.userdetails = function (req, res) {
 };
 
 exports.user_create = function (req, res) {     
-    let Password = bcrypt.hashSync(req.body.Password);
-    let userdetailsInfo = new UserdetailsInfo(
-        {
-            UserId:req.body.UserId,
-            Password:Password,
-            FirstName:req.body.FirstName,
-            LastName:req.body.LastName,
-            Email:req.body.Email,
-            ContactNumber: req.body.ContactNumber,
-            Organization: req.body.Organization,
-            Role:"USER",
-            Active:true
+    UserdetailsInfo.findOne({Email:req.body.Email},(err,userInfo)=>{
+        if(userInfo!==null){
+            return res.send("User already exists")
         }
-    );
-    userdetailsInfo.save(function (err) {
-        if (err) {
-            return next(err);
+        else{
+            let Password = bcrypt.hashSync(req.body.Password);
+            let userdetailsInfo = new UserdetailsInfo(
+                {
+                    UserId:uuid.v1(),
+                    Password:Password,
+                    FirstName:req.body.FirstName,
+                    LastName:req.body.LastName,
+                    Email:req.body.Email,
+                    ContactNumber: req.body.ContactNumber,
+                    Organization: req.body.Organization,
+                    Role:"USER",
+                    Active:true
+                }
+            );
+            userdetailsInfo.save(function (err) {
+                if (err) {
+                    return next(err);
+                }
+                res.send('User Created successfully');
+            
+            });
         }
-        res.send('User Created successfully');
-    
     });
+    
 };
 
 exports.login = (req,res)=>{
