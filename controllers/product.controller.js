@@ -1,6 +1,9 @@
-const Product = require('../models/product.model');
+const UserdetailsInfo = require('../models/product.model');
 
-//Simple version, without validation or sanitation
-exports.test = function (req, res) {
-    res.send('Greetings from the Test controller!');
+exports.userdetails = function (req, res) {
+    UserdetailsInfo.find({},function (err, userInfo) {    
+        console.log(err);
+        if (err) return next(err);       
+        res.send(userInfo);
+    });
 };
